@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Launching server...")
+	fmt.Println("Server started. You can run your clients")
 
 	listener, err := net.Listen("tcp", ":8090")
 	if err != nil {
