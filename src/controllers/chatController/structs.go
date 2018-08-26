@@ -1,12 +1,12 @@
 package chatController
 
 import (
-  "net"
-  "controllers/userController"
+	"controllers/userController"
+	"net"
 )
 
 type Chat struct {
-	Users  []*userController.User
+	Users    []*userController.User
 	Connect  chan net.Conn
 	Outgoing chan string
 }

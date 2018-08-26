@@ -1,10 +1,10 @@
 package userController
 
 import (
-    "bufio"
-    "net"
-    "fmt"
-    "encoding/json"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net"
 )
 
 func NewUser(conn net.Conn) *User {
@@ -40,27 +40,27 @@ func (user *User) write() {
 }
 
 func (user *User) read() {
-  var msg Message
+	var msg Message
 	for {
-    decoded := json.NewDecoder(user.Conn)
+		decoded := json.NewDecoder(user.Conn)
 
-    err := decoded.Decode(&msg)
-    if err != nil {
-      	user.Incoming <- fmt.Sprintf("%s is offline\n", user.Name)
-  			user.Status = false
-  			user.Disconnect <- true
-  			user.Conn.Close()
-  			break
-    }
+		err := decoded.Decode(&msg)
+		if err != nil {
+			user.Incoming <- fmt.Sprintf("%s is offline\n", user.Name)
+			user.Status = false
+			user.Disconnect <- true
+			user.Conn.Close()
+			break
+		}
 
-    switch {
+		switch {
 		case msg.MessageType == "name":
 			user.Name = msg.MessageText
 			user.Incoming <- fmt.Sprintf("server: %s is online\n", msg.MessageText)
 		case msg.MessageType == "message":
 			user.Incoming <- fmt.Sprintf("%s: %s \n", user.Name, msg.MessageText)
-    default:
-      break
+		default:
+			break
 		}
 	}
 }

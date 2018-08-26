@@ -1,21 +1,21 @@
 package chatController
 
 import (
-  	"net"
-    "controllers/userController"
-    "fmt"
+	"controllers/userController"
+	"fmt"
+	"net"
 )
 
 func StartChat(listener net.Listener) {
 	chat := &Chat{
-		Users:  make([]*userController.User, 0),
+		Users:    make([]*userController.User, 0),
 		Connect:  make(chan net.Conn),
 		Outgoing: make(chan string),
 	}
 
 	chat.listen()
 
-  for {
+	for {
 		conn, err := listener.Accept()
 		if err != nil {
 			fmt.Println(err)
@@ -28,11 +28,11 @@ func (chat *Chat) listen() {
 	go func() {
 		for {
 			select {
-      case msg := <-chat.Outgoing:
+			case msg := <-chat.Outgoing:
 				chat.broadcast(msg)
 			case conn := <-chat.Connect:
 				chat.join(conn)
-      }
+			}
 		}
 	}()
 }
@@ -51,8 +51,8 @@ func (chat *Chat) broadcast(data string) {
 	msg := fmt.Sprintf("%s", data)
 	for i, user := range chat.Users {
 		if !user.Status {
-      chat.Users = append(chat.Users[:i], chat.Users[i+1:]...)
+			chat.Users = append(chat.Users[:i], chat.Users[i+1:]...)
 		}
-    user.Outgoing <- msg
+		user.Outgoing <- msg
 	}
 }

@@ -1,8 +1,8 @@
 package userController
 
 import (
-  "net"
-  "bufio"
+	"bufio"
+	"net"
 )
 
 type User struct {
@@ -16,6 +16,6 @@ type User struct {
 }
 
 type Message struct {
-  MessageType string
-  MessageText string
+	MessageType string
+	MessageText string
 }
