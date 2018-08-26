@@ -1,0 +1,8 @@
+{
+  "name": "taxes",
+  "devDependencies": {
+    "colors": "1.1.2",
+    "gulp": "3.9.1",
+    "gulp-nodemon": "2.0.6"
+  }
+}
